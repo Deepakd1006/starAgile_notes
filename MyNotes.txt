@@ -132,7 +132,8 @@ Replication rules  : WE CAN ALSO HAVE THE REPLICATION OF THE BUCKET.
 If your having or crate it in same region its called SRR(same region replication) if your want in different region its called CRR(cross-region replication) 
 
 
-Encryption 
+> Encryption 
+
 S3 has a default 1) server-side encryption(SSE) which is free and its done by AWS side. we can also have our own Encryption methods by creating one with the AWS-services called "KMS" Key management system. 
 KMS is a separate services so search in the main page. 
 
@@ -182,8 +183,19 @@ Note: when your creating ec2 server inside a VPC with the default SG, we need to
 
 flow logs are nothing but it tracks the incoming traffic and stores it in the S3 bucket.
 
-> VPC PEERING  
+> VPC PEERING 
+. Basically connecting two VPC to communicate to each other we use VCP peering.
+. We can connect VPC from the same regions, and from different region and different AWS account as well. 
+. while connecting a VPC using VPC peering, it just works like a friend request in Facebook we just need to accept or reject
 
+> Direct Connect 
+AWS Direct Connect is a dedicated network connection between your on-premises data center (or office) and AWS. It allows you to connect your network to AWS resources privately without using the public internet, offering faster, more reliable, and secure data transfer.
+
+
+Q&A
+1) how many IP's are reserved by AWS ? ---- 5 IP's first 4 and last one.
+
+2) In order to use internet from private server which service is used ? ---- NAT-Gateway. 
 
 
 
@@ -192,23 +204,29 @@ flow logs are nothing but it tracks the incoming traffic and stores it in the S3
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+---------------------------------------------------------------
+Elastic Load Balancer (ELB) its called signal point of contact
+---------------------------------------------------------------
 
- 
+Distributes incoming application or network traffic across 
+multiple targets, such as Amazon EC2 instances, containers and IP addresses, in 
+multiple Availability Zones is called LB. 
+
+AWS offers 4 Load balancers.
+
+> application LB 
+> Network LB 
+> Gateway LB (new one in market and most of have no information of it because its new)
+> classic LB (oldest and will be removed sooner)
+
+In Common we use  Application Load Balancer and Network Load Balancer. 
+During creation we can see "Scheme" like where we want our LB Internet-facing or Internal(Insane like connection FE-servers to DB's etc)
 
 
+Step-up 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+1 - Create a LB 
+2 - Go inside the LB > under Target-instance(manage instances) select the instance which needs to be attached to this LB
+new update its called (Target Groups > registered targets)
 
 
