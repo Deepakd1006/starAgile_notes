@@ -1,0 +1,214 @@
+Aws cloud 
+3 types of computing models are Paas,Iaas, Saas
+--------------------------------------
+> IAM (Identity and Access Management) 
+--------------------------------------
+
+. Costume policy are also called inline policies
+
+
+.    what is role or what is IAM role ? 
+ans: basically giving access to the service to access an other service we use role in aws. most of the time, lets say 80% of the time its for giving permissions for services.
+In short, an IAM role is a secure, permission-based access rule for AWS resources, allowing services to communicate without credentials
+
+Example: Giving Ec2 services to access S3 bucket services.
+Let's say you have a web application hosted on an EC2 server that needs to store images in an S3 bucket. Instead of storing login credentials for the S3 bucket directly on the server, you can assign an IAM role to the EC2 instance that grants it access to the S3 bucket. The role will allow the EC2 instance to interact with S3, and the permissions are securely managed by AWS without requiring hard-coded credentials.  
+
+we can also give access to users (" assume role" when giving access to a user for a particular time. )
+IAM roles are commonly used to grant temporary or cross-account access to users.
+
+Example: 
+Account A (your company's primary account)
+Account B (another account for a project or a partner)
+If a user in Account A needs access to an S3 bucket in Account B, you can set up a role in Account B that allows access to the bucket. The user in Account A can then "assume" this role, getting the permissions needed to interact with the bucket temporarily.
+
+
+. MFA (Multi-factor authentication) is nothing but setting a two step verification for loging-in to a IAM users. 
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+-----------------------------
+> EC2(Elastic Compute Cloud)
+-----------------------------
+
+
+. what are the different types of EC2 ? what are there families ?
+Some of this are the examples for the types of EC2 systems based on there performance 
+
+General Purpose
+Compute Optimized
+Memory Optimized
+Storage Optimized
+Accelerated Computing
+High Performance Computing (HPC)
+
+
+. We can copy the snapshots from one region to other region to transfer data to a different region. we can not attach volume from a different region or AZ to a EC2 instance with different AZ. so we use copy snapshot method. 
+
+. volume which is created in different AZ or region can not be attached to a EC2 instance who's AZ is different. 
+
+. we can automate the back-up of data using snapshot there a option called create snapshot lifecycle policy.  
+
+. Check class recording for more details on instance punches (like On-demand its like pay-as-u-go charged for hrs / Reserved Instances its like a pre-paid plain / Spot Requests is like when there is sale in the AWS market but production does not use this as there is a catch behind like charges change every 1hr or something like that it can be used for the temp use like testing or practices etc) 
+
+
+AMI(Amazon Machine Images) : Taking the back of the EC2 machine we use AMI
+Note: while creating the AMI it will also ask a option to take a snapshot of the EBS(elastic block storage) which is attached to the EC2. so snapshot of this ec2 is also stored in the snapshot list. There is a option to disable it as well and create only the Ec2 config machine.
+
+Placement groups: cluster,partition,spread : placing the instance together got better performances we use placement groups with regards to AZ (availability Zones). 
+
+Cluster: In cluster placement group we can only add High performance machines. because we create a placement group for high performance what the point in having low performance machine in it.
+
+Spread and partition  : This two can have low performance 
+
+IP's : elastic IP, (public ip and static ip)
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+------------------------------------------
+EFS (Amazon Elastic File System )
+------------------------------------------
+
+Provides a simple, scalable, elastic file system. multiple Ec2 seviers can be attached to the EFS and access it as needed. its acts like a single file system where everyone can use just by connecting to it. 
+
+
+
+https://docs.aws.amazon.com/efs/latest/ug/installing-amazon-efs-utils.html#installing-other-distro
+
+https://docs.aws.amazon.com/efs/latest/ug/mounting-fs-mount-helper-ec2-linux.html
+
+
+############# efs commands #################
+
+sudo yum install -y amazon-efs-utils
+sudo mkdir efs	
+(choose as per ur efs)-- sudo mount -t efs -o tls fs-0fd6f3deb344d0925:/ efs (changes based on efs created)
+(choose as per ur efs)-- sudo mount -t nfs4 -o nfsvers=4.1,rsize=1048576,wsize=1048576,hard,timeo=600,retrans=2,noresvport fs-0fd6f3deb344d0925.efs.us-east-1.amazonaws.com:/ efs (Changes as per file system)
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------
+S3 Bucket (Amazon Simple Storage Service )
+Versioning, Pre-signed URL, website-Hosting, lifecycle rules , replication  Note: S3 is also called bump-home of AWS
+-----------------------------------------------------------------------------
+
+If we need to make the bucket public just edit the block all public access "ACL". we should also give access to the data inside the bucket. This means public is private but the objects or data inside the bucket is still private. we sould give them read access or time limited access with the help of "Presigned URL". 
+
+. "Bucker versioning" : If u update the files with the same name it would replace the file. To save the different versions of the file or folders we Turn of a settings called "Bucker versioning" after enabling we can the see the different versions of the files with the same name.
+
+. "Presigned URL" : Giving access to the files to outsider for the minimum time limit for example ur giving demo to a outside clint or something. there is a option called "Presigned URL" which can be used.
+
+. "Hosting static websites in S3" : we can also host static websites in the S3 bucket. Even if we hosting the website of the static files. we need to give access to the html file or all files and folders there read permissions. 3 steps permissions.
+1) Make bucket public
+2) Object Ownership (ACL access control list)
+3) Make object public. (check box : read ,read)
+
+. Object Storage class 
+S3 is famous is because of object storage classes, because there we can store files as per there usage. 
+
+Note : There is no storage classes in EBS
+
+In EFS there are : 
+1) standard 
+2) Infrequent Access
+3) Archive mode
+
+In S3 there are:
+1) standard
+2) IA : standard IA(Infrequent access) & One-zone IA
+3) Archive mode : Glacier, deep-Glacier, Instant Retrieval Glacier. 
+4) Intelligent-Tiering (this is completely AI based). 
+
+All of this is called lifecycle management or lifecycle rules : Use lifecycle rules to define actions you want Amazon S3 to take during an object's lifetime such as transitioning objects to another storage class, archiving them, or deleting them after a specified period of time. 
+we can create a lifecycle to move the files to a different Storage class as per there usage with days mentioned (The main reason is to reduce the cost)
+
+
+Replication rules  : WE CAN ALSO HAVE THE REPLICATION OF THE BUCKET.
+If your having or crate it in same region its called SRR(same region replication) if your want in different region its called CRR(cross-region replication) 
+
+
+Encryption 
+S3 has a default 1) server-side encryption(SSE) which is free and its done by AWS side. we can also have our own Encryption methods by creating one with the AWS-services called "KMS" Key management system. 
+KMS is a separate services so search in the main page. 
+
+2) Dual / client side encryption. 
+
+S3 logs (server access logging) : stores all the log file that the s3 bucket like who accessed what in the bucker its stores all kind of logs like users activates etc. 
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+-----------------------------
+VPC (Virtual Private Cloud)
+-----------------------------
+
+1) Internet-Gateway: In VPC user from outside has to entre it uses internet gateway
+
+2) Subnets(public & private )
+
+. If the subnets are attached to the Internet-gateway than it becomes public.
+
+. The watchman of the subnet is called NACL (network access control list)
+
+. Inside Subnets we have Ec2 instance created as per the requirement. Watchman of the server is called SG ( Security group) 
+
+. Private subnet in order to access internet it uses NAT-gateway
+
+. In order to use an other VPC and if we want to make internal connection its called "VPC peering"
+
+. If we need to access the private server we need to connect them using Public server which is called (bastion host or jump server) we use NAT gateway to give internet to the private subnet and that's how we connect from public server to private server. 
+
+. If showing the route from one subnet to other is called route-table. Connection b/w IGW to public subnet and Connection b/w NAT to private subnets we use route-table. 
+
+
+
+Note: when your creating ec2 server inside a VPC with the default SG, we need to edit the SG to allow the inbound rules or else we can not connect to the EC2 server with the web-browser or any SSH clint. 
+
+( SG and NACL in VPC )
+. SG works at the EC2 level and NACL is at the subnet level
+. There is no deny rule and only allow in SG and NACL has allow and deny 
+. In SG we don't work on out-bound rules, whereas in NACL we can also prefer outbound rules. 
+. In SG we don't have rule or rank, where as in NACL we have rules and rank. (watch class video 40:00 min/sec to know more about NACL rules and ranks)
+
+> TO KNOW THE WHO COME IN AND WHO GOES OUT OF VPC (to track the data we use "flow log")
+
+flow logs are nothing but it tracks the incoming traffic and stores it in the S3 bucket.
+
+> VPC PEERING  
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
