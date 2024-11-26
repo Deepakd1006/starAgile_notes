@@ -1,5 +1,16 @@
 Aws cloud 
+
+5 Aspects of manage services of AWS 
+
+Highly availability 
+Highly Scalability 
+Cost-effectiveness
+secure 
+performance
+
 3 types of computing models are Paas,Iaas, Saas
+
+
 --------------------------------------
 > IAM (Identity and Access Management) 
 --------------------------------------
@@ -44,6 +55,14 @@ Storage Optimized
 Accelerated Computing
 High Performance Computing (HPC)
 
+different types of purchasing 
+
+Dedicated Hosts - costly 
+On-Demand Instances 
+savings plans 
+reserved instances
+spot instances - cheapest one
+
 
 . We can copy the snapshots from one region to other region to transfer data to a different region. we can not attach volume from a different region or AZ to a EC2 instance with different AZ. so we use copy snapshot method. 
 
@@ -64,6 +83,18 @@ Cluster: In cluster placement group we can only add High performance machines. b
 Spread and partition  : This two can have low performance 
 
 IP's : elastic IP, (public ip and static ip)
+
+
+EBS - elastic Block storage 
+
+Three types of EBS volume 
+SSD - Solid state drive
+HDD - Hard disk drive (HDD) volumes
+magnetic 
+
+There is also lifecycle rules to take back-ups for EBS (Automating taking of snapshot for EBS volume)
+
+
 
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -129,7 +160,7 @@ we can create a lifecycle to move the files to a different Storage class as per 
 
 
 Replication rules  : WE CAN ALSO HAVE THE REPLICATION OF THE BUCKET.
-If your having or crate it in same region its called SRR(same region replication) if your want in different region its called CRR(cross-region replication) 
+If your having or create it in same region its called SRR(same region replication) if your want in different region its called CRR(cross-region replication) 
 
 
 > Encryption 
@@ -139,9 +170,7 @@ KMS is a separate services so search in the main page.
 
 2) Dual / client side encryption. 
 
-S3 logs (server access logging) : stores all the log file that the s3 bucket like who accessed what in the bucker its stores all kind of logs like users activates etc. 
-
-
+S3 logs (server access logging) : stores all the log file that the s3 bucket like who accessed what in the bucker its stores all kind of logs like users activates etc.  (more security for S3 KMS)
 
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -222,11 +251,81 @@ AWS offers 4 Load balancers.
 In Common we use  Application Load Balancer and Network Load Balancer. 
 During creation we can see "Scheme" like where we want our LB Internet-facing or Internal(Insane like connection FE-servers to DB's etc)
 
+Health check-up 
+pinging a website path example : /index.html or localhost/tom-cat or Ip:8080/Jenkins if the  LB can ping check if the application is running in the particular path than the check is successful.  
 
 Step-up 
-
+------------------------------------
+1) Working of Classic Load Balance.
+------------------------------------
+ 
 1 - Create a LB 
-2 - Go inside the LB > under Target-instance(manage instances) select the instance which needs to be attached to this LB
-new update its called (Target Groups > registered targets)
+2 - Go inside the LB > under Target-instance(manage instances) select the instance which needs to be attached to this LB. We can add instances while creating only in Classic LB. 
+
+Disturbing the Load
+lets say there are EC2 server in two AZ (AZ-1 and AZ-2) Az-1 has 2 severs and Az-2 has 5 Ec2 servers and it is attached to LB. Is it far to if the 80% goes to AZ1 and 20% goes to Az-2 ? No right. We use Cross-zone Load balancing. 
+While creating the LB we will have to enable the Cross-zone Load balancing if there EC2 server is in two AZ's and if we need the load to be equally distributed.  
+
+Step-up 
+---------------------------------------------
+2) Working of ALB- Application Load Balance
+---------------------------------------------
+Everything is same as Classic Load Balance only difference we will have to create "Target Groups" inside Target group we can add our instance which as same as Classic LB.
+
+Under Listeners and routing while creating we can find or we can create is after creating the LB as well. right-side below the LB we can find Target Groups in there we can create and add instances. 
+
+
+
+
+
+
+
+interview questions 
+
+Difference B/w ALB and NLB (100% conform question) 
+
+ALB - Application LB 
+1) it works on 7th layer[app location layer]
+2) It works on Domain names (example:google.com)
+3) slower
+4) Domain (Example : Google.com > Sub-domain: google News , google image.)
+
+
+NLB - Network LB
+1) It works on the 4th layer[Transport layer]
+2) It works on IP address
+3) faster (because it works on IPs)
+4) using in Gaming industry, long connation, many number of connections or request are huge we use NLB
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
