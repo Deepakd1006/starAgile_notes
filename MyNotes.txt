@@ -275,11 +275,6 @@ Everything is same as Classic Load Balance only difference we will have to creat
 Under Listeners and routing while creating we can find or we can create is after creating the LB as well. right-side below the LB we can find Target Groups in there we can create and add instances. 
 
 
-
-
-
-
-
 interview questions 
 
 Difference B/w ALB and NLB (100% conform question) 
@@ -288,7 +283,7 @@ ALB - Application LB
 1) it works on 7th layer[app location layer]
 2) It works on Domain names (example:google.com)
 3) slower
-4) Domain (Example : Google.com > Sub-domain: google News , google image.)
+4) side-hosting, content routing, Domain (Example : Google.com > Sub-domain: google News , google image.) 
 
 
 NLB - Network LB
@@ -296,6 +291,76 @@ NLB - Network LB
 2) It works on IP address
 3) faster (because it works on IPs)
 4) using in Gaming industry, long connation, many number of connections or request are huge we use NLB
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+----------------------------------------------
+AUTO-SCALING 
+----------------------------------------------
+AWS does not support Vertical Scaling. It supports only Horizontal scaling
+
+There Two types of Scaling. (Google images can give u better understanding so search in Google for more clarity )
+
+1) Vertical Scaling : Increase in size (example: increasing memory or the capacity of a EC2 sever or processor to 64GB to 128GB )
+
+2) Horizontal scaling : Increasing in instance or servers (Basically increasing number of EC2 severs)
+
+> Can we change the type of a EC2 Sever ?
+We can change the instance type. But the instance has to be in stop state.  
+Steps : Actions > instance settings > Change instance Type. 
+
+example:
+So what we just did here is Vertical scaling manually, Lets image Your hosting a cricket match live and we need more powerful system can we stop the server to increase the instance type ? No right. This where horizontal scaling comes into picture which supports auto-scaling.
+
+
+There are three types of auto-scaling.
+
+1) Predicted - AI based AWS sees how we use. 
+2) Scheduled - (Example : Sales like black-Friday we know when we need auto-scaling) 
+3) Dynamic - Which is changing on the requirement. 
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+ 
+
 
 
 
