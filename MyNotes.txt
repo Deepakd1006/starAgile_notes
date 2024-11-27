@@ -322,6 +322,36 @@ There are three types of auto-scaling.
 3) Dynamic - Which is changing on the requirement. 
 
 
+Steps to create auto-scaling.
+
+We need to tell AWS what kinda system we need for auto-scaling. 
+
+step1: We create Auto-Scaling Group.
+
+We need to create a "Launch Template" for auto-scaling.
+
+There are two way we can create Launch template.
+1) Launch a instance as per-requirement, so here as we create images for AMI. There is also a option called Create template from instance. 
+----------> Actions > image and template >  Create template from instance. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
  
 
