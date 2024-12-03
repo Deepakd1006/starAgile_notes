@@ -245,8 +245,8 @@ AWS offers 4 Load balancers.
 
 > application LB 
 > Network LB 
-> Gateway LB (new one in market and most of have no information of it because its new)
-> classic LB (oldest and will be removed sooner)
+> Gateway LB (new one in market and most of them have no information of it, because its new)
+> classic LB (oldest and will be removed sooner or might not as internally all the services use this)
 
 In Common we use  Application Load Balancer and Network Load Balancer. 
 During creation we can see "Scheme" like where we want our LB Internet-facing or Internal(Insane like connection FE-servers to DB's etc)
@@ -317,23 +317,59 @@ So what we just did here is Vertical scaling manually, Lets image Your hosting a
 
 There are three types of auto-scaling.
 
-1) Predicted - AI based AWS sees how we use. 
-2) Scheduled - (Example : Sales like black-Friday we know when we need auto-scaling) 
-3) Dynamic - Which is changing on the requirement. 
+1) Predictive scaling policies (Predicted) - AI based AWS sees how we use.  
+2) Scheduled actions (Scheduled)  - (Example : Sales like black-Friday we know when we need auto-scaling we can mention the time date etc as per that time the auto scale will scale up and down.) 
+3) Dynamic scaling policies (Dynamic) - Which is changing on the requirement. (automatically adjusts resources #can be used in unpredictable situations)
 
 
 Steps to create auto-scaling.
 
-We need to tell AWS what kinda system we need for auto-scaling. 
+We need to tell AWS what kind of system we need for auto-scaling. 
 
 step1: We create Auto-Scaling Group.
 
 We need to create a "Launch Template" for auto-scaling.
 
 There are two way we can create Launch template.
-1) Launch a instance as per-requirement, so here as we create images for AMI. There is also a option called Create template from instance. 
+
+First way :  (preferred way)
+1) Launch a instance as per-requirement, so here, as we create images for AMI. There is also a option called Create template from instance. 
 ----------> Actions > image and template >  Create template from instance. 
 
+* Fill in the required details like Launch template name,Template version description, Launch template contents etc 
+* Everything here will be picked automatically as we create Template from a existing EC2 instance.
+
+Second way:
+2) Under Ec2 > Create launch template towards the lift side u will find. manually creating by providing what type of instance, volume, key-pair, images etc. 
+
+Now under the Auto Scaling > Auto Scaling Groups we can create a Auto-scale for the particular project.
+
+Steps to create: 
+1) Choose launch template :  (Give name, select the template ) after selecting the template, we can see what kind of AMI id is used in the template, instance type, key-pair etc. 
+
+2) Choose instance launch options : (Here choose the VPC where the instance has to be create and in which VPC & choose the Availability Zones and subnets) 
+In "Availability Zone distribution - new" choose anyone this will Take care of where the instance will be created as per the Availability to create the EC2.
+
+3) Integrate with other services : Here if we want to attach the Load balancer we can do so. we can also create LB if we want here. 
+"VPC Lattice integration options" is an additional services that helps us understanding networking. More information about networking so select "No VPC lattice service" here. its an additional services. 
+Health check is automatically attached here. 
+
+4)  Configure group size and scaling : 
+
+Note:
+Capacity : We have minimum capacity, Desired(normal) capacity & maximum capacity. 
+
+* Here under Configure group size and scaling we can mention our max, min , desired state of the instance (Basically mentioning the number of systems as per the traffic)
+* Here we also select the scaling policies. After the creation also we can choose the "scaling policies" There are three policy 
+
+Note: Selecting the Max desired capacity is completely based on the budget of the project. there is no particular calculation for it.  
+
+Explanation of the "scaling policies"
+
+1) Scheduled action : we can set time for creation of the EC2 instance and Deletion of EC2. For both creation and deletion we need to create a Separate action. 
+Setting the max, min and Desired state of the EC2. we can also schedule time of creation and deletion. Explore the Service in Aws console for better understanding. 
+
+2) Dynamic scaling policies : 
 
 
 
@@ -350,10 +386,19 @@ There are two way we can create Launch template.
 
 
 
+ChatGPT questions.
+so auto scaling is only about handling traffic ? and system processer types makes the application faster ? am I right ?
+
+Answer: Yes, you're absolutely correct! Auto Scaling is primarily about managing traffic load and ensuring your application has the right number of resources (instances) to handle changes in demand. However, the underlying instance types and system configurations (like processor type, memory, and network performance) determine how efficiently the application runs and how "fast" it feels to users.
 
 
 
- 
+
+
+
+
+     
+  
 
 
 
