@@ -1,6 +1,6 @@
 Aws cloud 
 
-5 Aspects of manage services of AWS 
+5 Aspects or 5 Pillars of the Framework of manage services of AWS 
 
 Highly availability 
 Highly Scalability 
@@ -59,9 +59,10 @@ different types of purchasing
 
 Dedicated Hosts - costly 
 On-Demand Instances 
+spot instances - cheapest one
 savings plans 
 reserved instances
-spot instances - cheapest one
+
 
 
 . We can copy the snapshots from one region to other region to transfer data to a different region. we can not attach volume from a different region or AZ to a EC2 instance with different AZ. so we use copy snapshot method. 
@@ -151,7 +152,7 @@ In EFS there are :
 
 In S3 there are:
 1) standard
-2) IA : standard IA(Infrequent access) & One-zone IA
+2) Infrequent access(IA): standard IA(Infrequent access) & One-zone IA
 3) Archive mode : Glacier, deep-Glacier, Instant Retrieval Glacier. 
 4) Intelligent-Tiering (this is completely AI based). 
 
@@ -180,7 +181,7 @@ S3 logs (server access logging) : stores all the log file that the s3 bucket lik
 VPC (Virtual Private Cloud)
 -----------------------------
 
-1) Internet-Gateway: In VPC user from outside has to entre it uses internet gateway
+1) Internet-Gateway: In VPC, if users from outside has to entre. it uses internet gateway
 
 2) Subnets(public & private )
 
@@ -274,6 +275,7 @@ Everything is same as Classic Load Balance only difference we will have to creat
 
 Under Listeners and routing while creating we can find or we can create is after creating the LB as well. right-side below the LB we can find Target Groups in there we can create and add instances. 
 
+Note : ALB used (HTTP and HTTPS proto-calls) and NLB used (TCP,TLS and UDP proto-calls)
 
 interview questions 
 
@@ -292,6 +294,17 @@ NLB - Network LB
 3) faster (because it works on IPs)
 4) using in Gaming industry, long connation, many number of connections or request are huge we use NLB
 
+
+interview questions on LB :
+
+1) which type of load balancer works on the network layer ? 
+Ans : Gateway load balancer.
+
+2) If the connection has to be on years bases, which kind of LB is to be used ? 
+Ans : NLB Net
+
+3) I'm creating a application like amazon.com, which kind of LB is to be used ? 
+Ans : Appication LB 
 
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -369,25 +382,32 @@ Explanation of the "scaling policies"
 1) Scheduled action : we can set time for creation of the EC2 instance and Deletion of EC2. For both creation and deletion we need to create a Separate action. 
 Setting the max, min and Desired state of the EC2. we can also schedule time of creation and deletion. Explore the Service in Aws console for better understanding. 
 
-2) Dynamic scaling policies : 
+2) Dynamic scaling policies : Dynamic is divided into 3 sub-category.
+we have different Metric : CPU Utilization and Network coming in and out traffic. 
+Note: In generally in our industry we focus on CPU Utilization.  
+
+* Target : In target, we can set conduction life lets say (if CPU utilization = 50% increase into max )
+
+* Simple : In Simple the process is almost same but it uses an one addition feature called CloudWatch alarms. ( if load is 70% it increases number of servers ) We should create a cloudwatcg alaram 
+
+* Step-Case : Step-case is like a normal staircase in real life.
+( 1st step: if utilization is 50 add 2 servers
+  2nd step: if utilization is 60 add 1 more servers
+  3rd step: if utilization is 70 add 1 more level servers )
+  We should create a cloudwatcg alaram here also. 
+
+Note : In industory we use the first one "trager trackinf scaling" based. 
+
+You can test this policie by putting load on the servers.
+The command to put stress on sever is : sudo apt install stress
+					sudo stress --cpu 16 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-ChatGPT questions.
-so auto scaling is only about handling traffic ? and system processer types makes the application faster ? am I right ?
+--------------------
+Chat-GPT questions.
+--------------------
+So auto scaling is only about handling traffic ? and system processer types makes the application faster ? am I right ?
 
 Answer: Yes, you're absolutely correct! Auto Scaling is primarily about managing traffic load and ensuring your application has the right number of resources (instances) to handle changes in demand. However, the underlying instance types and system configurations (like processor type, memory, and network performance) determine how efficiently the application runs and how "fast" it feels to users.
 
