@@ -1,0 +1,13 @@
+version: '3'
+services:
+  webserv:
+    image: "chrisdee10/docker_assignment1:v1.0"
+    ports:
+      - "8098:8080"
+
+  dbserv:
+    image: "mysql:8.0"
+    environment:
+      MYSQL_ROOT_PASSWORD: Deepakkumar
+    ports:
+      - "3306:3306"
