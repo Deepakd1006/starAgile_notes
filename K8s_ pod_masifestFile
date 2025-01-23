@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: myapplication
+  labels:
+    app: static_webcontant
+    tier: chris
+spec:
+  containers:
+  - name: deepak-resume-web
+    image: chrisdee10/docker_assignment1:v1.0
+    ports:
+    - containerPort: 8080
+
+
+### To expose the pod to the internet we use Nodeport mapping here. 
+# kubectl expose pod myapplication --type=NodePort --port=8080 
