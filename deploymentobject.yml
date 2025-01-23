@@ -1,0 +1,39 @@
+# nginx-deploy.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapplication
+  labels:
+    app: myapplication-lbl
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: deepak_webpage
+    spec:
+      containers:
+      - name: chris-chris
+        image: chrisdee10/docker_assignment1:v1.0
+        ports:
+        - containerPort: 8080
+  selector:
+    matchLabels:
+      app: deepak_webpage
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapplication-service
+  labels:
+    app: myapplication-lbl
+spec:
+  type: NodePort
+  selector:
+    app: deepak_webpage
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30080
