@@ -1,3 +1,4 @@
+# nginx-deploy.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -18,14 +19,14 @@ spec:
         - containerPort: 8080
         ## mounting it here
         volumeMounts:
-        - mountPath: /test-mnt
-          name: test-vol
+        - mountPath: /myweb-mnt
+          name: myweb-vol
 
     ## hostpart-volume_creation
       volumes:
-      - name: test-vol
+      - name: myweb-vol
         hostPath:
-          path: /test-vol
+          path: /myweb-vol
 
   selector:
     matchLabels:
