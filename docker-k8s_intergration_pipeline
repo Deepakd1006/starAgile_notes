@@ -1,0 +1,55 @@
+#docker-k8s_intergration
+pipeline {
+    agent { label 'SlaveNode1' }
+
+	environment {	
+		DOCKERHUB_CREDENTIALS=credentials('docker_CI')
+	}docker-k8s_intergration
+	
+    stages {
+        stage('SCM_Checkout') {
+            steps {
+               echo "Perform SCM Checkout"
+			   git 'https://github.com/Deepakd1006/java-mvn-springbootapp.git'			   
+            }
+        }
+        stage('Application Build') {
+            steps {
+                echo "Perform Application Build"
+				sh 'mvn clean package'
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+				sh 'docker version'
+				sh "docker build -t chrisdee10/docker_assignment1:${BUILD_NUMBER} ."
+				sh 'docker image list'
+				sh "docker tag chrisdee10/docker_assignment1:${BUILD_NUMBER} chrisdee10/docker_assignment1:latest"
+            }
+        }
+		stage('Login2DockerHub') {
+
+			steps {
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
+		stage('Publish_to_Docker_Registry') {
+			steps {
+			    sh "docker push chrisdee10/docker_assignment1:${BUILD_NUMBER}"
+				sh "docker push chrisdee10/docker_assignment1:latest"
+			}
+		}
+        stage('Deploy to Kubernetes Cluster') {
+            steps {
+                script{
+                  // sshPublisher(publishers: [sshPublisherDesc(configName: 'k8s', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'kubectl apply -f kubedeploy.yaml', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '*.yaml')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
+                  sshPublisher(publishers: [sshPublisherDesc(configName: 'k8s', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: """
+                    kubectl apply -f kubedeploy.yaml
+                    kubectl set image deployment/myapplication chris-chris=chrisdee10/docker_assignment1:${BUILD_NUMBER}
+                    kubectl rollout status deployment/myapplication
+                    """, execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '.', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '*.yaml')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])                
+                }
+            }
+        }
+    }
+}
