@@ -74,7 +74,7 @@ reserved instances
 . Check class recording for more details on instance punches (like On-demand its like pay-as-u-go charged for hrs / Reserved Instances its like a pre-paid plain / Spot Requests is like when there is sale in the AWS market but production does not use this as there is a catch behind like charges change every 1hr or something like that it can be used for the temp use like testing or practices etc) 
 
 
-AMI(Amazon Machine Images) : Taking the back of the EC2 machine we use AMI
+AMI(Amazon Machine Images) : Taking the back-up of the EC2 machine we use AMI
 Note: while creating the AMI it will also ask a option to take a snapshot of the EBS(elastic block storage) which is attached to the EC2. so snapshot of this ec2 is also stored in the snapshot list. There is a option to disable it as well and create only the Ec2 config machine.
 
 Placement groups: cluster,partition,spread : placing the instance together got better performances we use placement groups with regards to AZ (availability Zones). 
