@@ -298,7 +298,7 @@ NLB - Network LB
 interview questions on LB :
 
 1) which type of load balancer works on the network layer ? 
-Ans : Gateway load balancer.
+Ans : network load balancer.
 
 2) If the connection has to be on years bases, which kind of LB is to be used ? 
 Ans : NLB Net
